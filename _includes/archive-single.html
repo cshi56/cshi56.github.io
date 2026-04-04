@@ -96,7 +96,10 @@
     <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
     {% endif %}
     
-    {% assign show_paper = post.paperurl and not post.hide_paper_download %}
+    {% assign show_paper = false %}
+    {% if post.paperurl and post.hide_paper_download != true %}
+      {% assign show_paper = true %}
+    {% endif %}
     {% if post.citation %}
       <p>Recommended citation: {{ post.citation }}
         {% if show_paper %}<br /><a href="{{ post.paperurl }}">Download Paper</a>{% endif %}

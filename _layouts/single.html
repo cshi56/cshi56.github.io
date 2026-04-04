@@ -39,7 +39,9 @@ layout: default
         {% elsif page.collection == 'publications' and page.authors %}
           {% assign authors_str = page.authors | join: ', ' %}
           {% if page.authors.size > 1 %}
-            {% assign authors_str = authors_str | replace: ', ' + page.authors.last, ', and ' + page.authors.last %}
+            {% assign last_author_with_comma = ', ' | append: page.authors.last %}
+            {% assign last_author_with_and = ', and ' | append: page.authors.last %}
+            {% assign authors_str = authors_str | replace: last_author_with_comma, last_author_with_and %}
           {% endif %}
           {% assign is_preprint = false %}
           {% if page.category == 'manuscripts' or page.category == 'preprints' %}
@@ -79,7 +81,10 @@ layout: default
       <section class="page__content" itemprop="text">
         {{ content }}
 
-        {% assign show_paper = page.paperurl and not page.hide_paper_download %}
+        {% assign show_paper = false %}
+        {% if page.paperurl and page.hide_paper_download != true %}
+          {% assign show_paper = true %}
+        {% endif %}
         {% if page.citation %}
           <p style="font-size: smaller">Recommended citation: {{ page.citation }}
             {% if show_paper %}<br /><a href="{{ page.paperurl }}">Download Paper</a>{% endif %}

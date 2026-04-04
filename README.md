@@ -45,7 +45,7 @@ When you are initially working on your website, it is very useful to be able to 
     brew install node
     gem install bundler
     ```
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
+1. Run `bundle install` to install ruby dependencies.
 
     If you see file permission error like `Fetching bundler-2.6.3.gem ERROR:  While executing gem (Gem::FilePermissionError) You don't have write permissions for the /var/lib/gems/3.2.0 directory.` or `Bundler::PermissionError: There was an error while trying to write to /usr/local/bin.`
     Install Gems Locally (Recommended):
@@ -56,6 +56,26 @@ When you are initially working on your website, it is very useful to be able to 
 
 1. Run `jekyll serve -l -H localhost` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change to Markdown (*.md) and HTML files, while changes to the core template and configuration (i.e., `_config.yml`) will require stopping and restarting Jekyll.
     You may also try `bundle exec jekyll serve -l -H localhost` to ensure jekyll to use specific dependencies on your own local machine.
+
+### Stable local Ruby setup
+
+This repository is intended to run with `ruby-3.1.2` and Bundler `2.6.9`.
+
+On macOS with `chruby`, a stable workflow is:
+
+```bash
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+chruby ruby-3.1.2
+gem install bundler:2.6.9
+bundle _2.6.9_ install
+bundle _2.6.9_ exec jekyll serve -l -H localhost -P 4000
+```
+
+Notes:
+
+- The repository includes a `.ruby-version` file so Ruby managers can auto-select `ruby-3.1.2`.
+- Do not delete `Gemfile.lock` as part of the normal workflow. Keeping the lockfile makes dependency resolution more consistent across machines.
+- If you change `_config.yml`, stop the server and restart `jekyll serve`.
 
 If you are running on Linux it may be necessary to install some additional dependencies prior to being able to run locally: `sudo apt install build-essential gcc make`
 
