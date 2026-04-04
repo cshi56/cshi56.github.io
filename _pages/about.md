@@ -18,4 +18,5 @@ More recently, I have also become interested in how statistical methods are used
 
 News
 ======
+- **June 3-5, 2026**: The papers on hypothesis testing with strategic agents were selected as highlights at [FORC 2026](https://responsiblecomputing.org/forc-2026/). Looking forward to seeing you at Harvard University in June!
 - **April 10, 2026**: I will give a lightning talk on "Hypothesis Testing in Multiagent Systems" in [SDSCon 2026](https://sdscon.mit.edu/) at MIT. 
