@@ -41,14 +41,32 @@ layout: default
           {% if page.authors.size > 1 %}
             {% assign authors_str = authors_str | replace: ', ' + page.authors.last, ', and ' + page.authors.last %}
           {% endif %}
-          {% if page.category == 'manuscripts' %}
-            {% if page.venue %}
-              <p>{{ authors_str }}. <i>{{ page.venue }}</i>, {{ page.date | date: '%Y' }}.</p>
+          {% assign is_preprint = false %}
+          {% if page.category == 'manuscripts' or page.category == 'preprints' %}
+            {% assign is_preprint = true %}
+          {% endif %}
+          {% capture publication_details %}
+            {% if page.venue %}<i>{{ page.venue }}</i>{% endif %}
+            {% if page.volume %}
+              {% if page.venue %}, {% endif %}{{ page.volume }}
+            {% endif %}
+            {% if page.pages %}
+              {% if page.venue or page.volume %}: {% endif %}{{ page.pages }}
+            {% endif %}
+          {% endcapture %}
+          {% assign publication_details = publication_details | strip %}
+          {% if is_preprint %}
+            {% if publication_details != '' %}
+              <p>{{ authors_str }}. {{ publication_details }}, {{ page.date | date: '%Y' }}.</p>
             {% else %}
               <p>{{ authors_str }}, {{ page.date | date: '%Y' }}</p>
             {% endif %}
           {% else %}
-            <p>{{ authors_str }}. {{ page.venue }}, {{ page.volume }}: {{ page.pages }}, {{ page.date | date: '%Y' }}.</p>
+            {% if publication_details != '' %}
+              <p>{{ authors_str }}. {{ publication_details }}, {{ page.date | date: '%Y' }}.</p>
+            {% else %}
+              <p>{{ authors_str }}, {{ page.date | date: '%Y' }}</p>
+            {% endif %}
           {% endif %}
         {% elsif page.venue and page.date %}
           <p>Published in <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }}</p>

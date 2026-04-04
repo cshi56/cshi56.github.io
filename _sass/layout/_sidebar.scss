@@ -151,13 +151,15 @@
     display: block;
     width: auto;
     height: auto;
+    text-align: center;
   }
 
   img {
-    max-width: 175px;
+    max-width: 210px;
     border-radius: 50%;
 
     @include breakpoint($large) {
+      display: inline-block;
       padding: 5px;
       border: 1px solid var(--global-border-color);
     }
@@ -176,6 +178,7 @@
     width: 100%;
     padding-left: 0;
     padding-right: 0;
+    text-align: center;
   }
 }
 
@@ -234,6 +237,7 @@
 
   @include breakpoint($large) {
     display: block;
+    text-align: center;
   }
 
   button {
@@ -267,6 +271,7 @@
     border: 0;
     background: transparent;
     box-shadow: none;
+    text-align: center;
   }
 
   &:before {
@@ -305,6 +310,10 @@
 
   li {
     white-space: nowrap;
+
+    @include breakpoint($large) {
+      text-align: center;
+    }
   }
 
   a {
@@ -316,6 +325,10 @@
     color: inherit;
     font-size: $type-size-5;
     text-decoration: none;
+
+    @include breakpoint($large) {
+      display: inline-block;
+    }
 
     &:hover {
       text-decoration: underline;

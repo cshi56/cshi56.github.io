@@ -204,6 +204,7 @@
 
   .visible-links {
     display: table;
+    padding-right: 2.75rem;
 
     li {
       display: table-cell;
@@ -226,11 +227,18 @@
     }
 
     #theme-toggle {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+
       a {
         width: 25px;
         display: flex;
         justify-content: center;
         cursor: pointer;
+        margin-right: 0;
+        margin-left: 0;
       }
     }
 

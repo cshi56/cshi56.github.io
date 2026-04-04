@@ -57,14 +57,32 @@
               {% assign authors_str = authors_str | append: ', ' | append: display_author %}
             {% endif %}
           {% endfor %}
-          {% if post.category == 'manuscripts' %}
-            {% if post.venue %}
-              <p>{{ authors_str }}. <i>{{ post.venue }}</i>, {{ post.date | date: '%Y' }}.</p>
+          {% assign is_preprint = false %}
+          {% if post.category == 'manuscripts' or post.category == 'preprints' %}
+            {% assign is_preprint = true %}
+          {% endif %}
+          {% capture publication_details %}
+            {% if post.venue %}<i>{{ post.venue }}</i>{% endif %}
+            {% if post.volume %}
+              {% if post.venue %}, {% endif %}{{ post.volume }}
+            {% endif %}
+            {% if post.pages %}
+              {% if post.venue or post.volume %}: {% endif %}{{ post.pages }}
+            {% endif %}
+          {% endcapture %}
+          {% assign publication_details = publication_details | strip %}
+          {% if is_preprint %}
+            {% if publication_details != '' %}
+              <p>{{ authors_str }}. {{ publication_details }}, {{ post.date | date: '%Y' }}.</p>
             {% else %}
               <p>{{ authors_str }}, {{ post.date | date: '%Y' }}.</p>
             {% endif %}
           {% else %}
-            <p>{{ authors_str }}. {{ post.venue }}, {{ post.volume }}: {{ post.pages }}, {{ post.date | date: '%Y' }}.</p>
+            {% if publication_details != '' %}
+              <p>{{ authors_str }}. {{ publication_details }}, {{ post.date | date: '%Y' }}.</p>
+            {% else %}
+              <p>{{ authors_str }}, {{ post.date | date: '%Y' }}.</p>
+            {% endif %}
           {% endif %}
         {% elsif post.collection == 'publications' and post.venue and post.date %}
           <p>Published in <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
