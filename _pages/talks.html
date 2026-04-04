@@ -1,9 +1,15 @@
 ---
 layout: archive
-title: "Talks and presentations"
+title: "Presentations"
 permalink: /talks/
 author_profile: true
 ---
+
+<style>
+  .talks-list .archive__item:hover .archive__item-title {
+    text-decoration: none;
+  }
+</style>
 
 {% if site.talkmap_link == true %}
 
@@ -11,6 +17,24 @@ author_profile: true
 
 {% endif %}
 
-{% for post in site.talks reversed %}
-  {% include archive-single-talk.html %}
+{% assign talks_by_date = site.talks | sort: "date" | reverse %}
+
+<div class="talks-list">
+{% for post in talks_by_date %}
+  <div class="archive__item">
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      <h2 class="archive__item-title" itemprop="headline">{{ post.title }}</h2>
+      <ul>
+        {% if post.presentations %}
+          {% assign presentations_by_date = post.presentations | sort: "date" | reverse %}
+          {% for presentation in presentations_by_date %}
+            <li>{%- if presentation.type -%}{{ presentation.type }}{%- elsif post.type -%}{{ post.type }}{%- endif -%}{%- if presentation.type or post.type -%}{%- if presentation.venue or presentation.location or presentation.date_display or presentation.date -%}, {% endif %}{%- endif -%}{%- if presentation.venue -%}{{ presentation.venue }}{%- endif -%}{%- if presentation.location -%}{%- if presentation.venue -%}, {% endif -%}{{ presentation.location }}{%- endif -%}{%- if presentation.date_display -%}{%- if presentation.venue or presentation.location -%}, {% endif -%}{{ presentation.date_display }}{%- elsif presentation.date -%}{%- if presentation.venue or presentation.location -%}, {% endif -%}{{ presentation.date | date: '%B %Y' }}{%- endif -%}</li>
+          {% endfor %}
+        {% else %}
+          <li>{%- if post.type -%}{{ post.type }}{%- endif -%}{%- if post.type -%}{%- if post.venue or post.location or post.date_display or post.date -%}, {% endif -%}{%- endif -%}{%- if post.venue -%}{{ post.venue }}{%- endif -%}{%- if post.location -%}{%- if post.venue -%}, {% endif -%}{{ post.location }}{%- endif -%}{%- if post.date_display -%}{%- if post.venue or post.location -%}, {% endif -%}{{ post.date_display }}{%- elsif post.date -%}{%- if post.venue or post.location -%}, {% endif -%}{{ post.date | date: '%B %Y' }}{%- endif -%}</li>
+        {% endif %}
+      </ul>
+    </article>
+  </div>
 {% endfor %}
+</div>
