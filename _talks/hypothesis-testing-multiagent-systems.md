@@ -6,7 +6,7 @@ date: 2026-02-01
 presentations:
   - type: "Talk"
     venue: "The Symposium on Foundations of Responsible Computing (FORC)"
-    location: "Harvard"
+    location: "Harvard University"
     date: 2026-06-05
     date_display: "June 2026"
   - type: "Talk"
